@@ -1,0 +1,34 @@
+{
+  "name": "taller-vibe",
+  "version": "1.0.0",
+  "description": "**Asignatura:** Ingeniería de Software III\r **Programa:** Ingeniería de Sistemas y Computación — Universidad de Caldas\r **Docente:** Yaneth Mejía",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/database/seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alejo-pine/asistencia-api-vibe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alejo-pine/asistencia-api-vibe/issues"
+  },
+  "homepage": "https://github.com/alejo-pine/asistencia-api-vibe#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.9.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

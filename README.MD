@@ -76,6 +76,32 @@ El taller se divide en cuatro fases. Cada fase tiene un tiempo sugerido y un pun
 4. Copia y pega el código que te genere. Si te pide ejecutar `npm install`, hazlo sin leer qué dependencias agrega. Si aparecen errores, cópialos y pégalos en el chat de la IA hasta que se resuelvan.
 5. Cuando logres que los seis endpoints respondan, haz commit con el mensaje `vibe: API funcional segun la IA`.
 
+### 🚀 Instrucciones para ejecutar el proyecto generado
+
+1. **Instalar las dependencias**
+   ```bash
+   npm install
+   ```
+
+2. **Crear archivo de entorno**
+   Copia el archivo `.env.example` a `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Poblar la base de datos con datos de prueba (Seeds)**
+   ```bash
+   npm run seed
+   ```
+
+4. **Levantar el servicio**
+   ```bash
+   npm start
+   ```
+   *También puedes usar `npm run dev` para correr en modo desarrollo con nodemon.*
+
+El servidor se ejecutará de forma predeterminada en `http://localhost:3000`.
+
 **Punto de control:** debes poder hacer `POST /api/estudiantes` y `GET /api/estudiantes` desde Postman o `curl` y obtener respuesta `200`.
 
 **Entregable parcial:** captura de pantalla de los seis endpoints respondiendo + commit en GitHub.
