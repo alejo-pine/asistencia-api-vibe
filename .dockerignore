@@ -1,0 +1,7 @@
+node_modules/
+npm-debug.log
+.env
+src/database/asistencia.db
+src/database/asistencia.db-journal
+.DS_Store
+.git/

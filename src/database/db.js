@@ -1,8 +1,8 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-// Inicializa en un directorio de datos para no ensuciar la raíz
-const dbPath = path.resolve(__dirname, 'asistencia.db');
+// Permite configurar la ruta por variable de entorno para producción (Fly.io) o usar la local.
+const dbPath = process.env.DB_PATH || path.resolve(__dirname, 'asistencia.db');
 const db = new Database(dbPath, { verbose: console.log });
 
 // Inicializar y crear tablas
