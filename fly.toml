@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for taller-vibe-api on 2026-04-20T17:35:56Z
+# fly.toml app configuration file generated for taller-vibe-api-green-snow-8356 on 2026-04-22T22:47:05-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'taller-vibe-api'
+app = 'taller-vibe-api-green-snow-8356'
 primary_region = 'iad'
 
 [build]
