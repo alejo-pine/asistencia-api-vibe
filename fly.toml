@@ -1,4 +1,6 @@
-# fly.toml app configuration file
+# fly.toml app configuration file generated for taller-vibe-api on 2026-04-23T03:50:48Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'taller-vibe-api'
@@ -7,11 +9,9 @@ primary_region = 'iad'
 [build]
 
 [env]
-  PORT = '3000'
-  # Ruta donde SQLite buscará la BD en Fly.io
   DB_PATH = '/app/data/asistencia.db'
+  PORT = '3000'
 
-# Montaje de volumen para mantener la persistencia de los datos en SQLite
 [[mounts]]
   source = 'taller_vibe_data'
   destination = '/app/data'
@@ -25,5 +25,6 @@ primary_region = 'iad'
 
 [[vm]]
   memory = '256mb'
+  cpu_kind = 'shared'
   cpus = 1
   memory_mb = 256
