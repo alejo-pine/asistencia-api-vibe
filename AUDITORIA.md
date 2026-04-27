@@ -57,3 +57,75 @@ A continuación se presentan los hallazgos de la auditoría técnica realizada s
 - **Descripción:** El uso de una dependencia autogenerada `@flydotio/dockerfile@0.7.10` en el proyecto introduce vulnerabilidades de bajo nivel correspondientes con el uso colateral de la librería dependiente `diff`.
 - **Evidencia:** Al ejecutar externamente `npm audit`, detecta la existencia de las 2 vulnerabilidades de bajo impacto indicando un "Depends on vulnerable versions of diff". 
 - **Impacto:** Posibles vulnerabilidades derivadas durante la etapa de despliegues productivos. Incremento de vectores imprevistos ante herramientas automáticas ajenas a los requerimientos centrales.
+
+---
+
+## Bugs confirmados por pruebas
+
+**Fecha de ejecución:** 2026-04-26
+**Total de casos de prueba escritos:** 15 (20 funciones de test — los casos 2, 7 y 9 incluyen sub-variantes)
+**Pruebas que pasaron (verde):** 20
+**Pruebas que fallaron (rojo):** 0
+
+### Resultado general
+
+Ninguna de las 20 pruebas falló. Esto no equivale a afirmar que el sistema carece de bugs; significa que los 15 escenarios descritos no lograron poner en evidencia fallos en el flujo de ejecución del código tal como está escrito hoy. A continuación se detalla lo que las pruebas *sí* confirmaron y lo que permanece fuera del alcance de la suite.
+
+### Comportamientos confirmados como correctos por las pruebas
+
+- ✅ Caso 1 — Creación exitosa: `POST /api/estudiantes` retorna 201 con `id` y `codigo` dentro de `result`.
+- ✅ Caso 2a — `codigo: "abc123"` rechazado con 400 (no comienza con EST).
+- ✅ Caso 2b — `codigo: "EST1"` rechazado con 400 (menos de 5 dígitos).
+- ✅ Caso 2c — `codigo: "EST000001"` rechazado con 400 (6 dígitos, excede el límite).
+- ✅ Caso 2d — `codigo: "est00001"` rechazado con 400 (la regex es case-sensitive).
+- ✅ Caso 3 — Código duplicado devuelve 409 correctamente.
+- ✅ Caso 4 — BD vacía devuelve `[]`, no `null` ni error.
+- ✅ Caso 5 — Listado refleja exactamente los registros insertados.
+- ✅ Caso 6 — `GET /api/estudiantes/99999` devuelve 404 con campo `error`.
+- ✅ Caso 7a — Body vacío `{}` rechazado con 400 (express-validator detecta campos `undefined` como vacíos).
+- ✅ Caso 7b — Payload sin `nombre` rechazado con 400.
+- ✅ Caso 8 — Asistencia válida con fecha pasada retorna 201.
+- ✅ Caso 9a — Estado `"tardanza"` rechazado con 400 (no está en el enum).
+- ✅ Caso 9b — Estado `"PRESENTE"` rechazado con 400 (el enum es estrictamente case-sensitive).
+- ✅ Caso 10 — Fecha de mañana (calculada dinámicamente) rechazada con 400.
+- ✅ Caso 11 — Segunda asistencia con mismo `estudianteId` + `fecha` retorna 409.
+- ✅ Caso 12 — Historial devuelve 3 registros ordenados por `fecha DESC`.
+- ✅ Caso 13 — Historial de `id=99999` devuelve 404 con campo `error`, no array vacío.
+- ✅ Caso 14 — Reporte de ausentismo con BD vacía retorna 200 y `[]`, sin error 500.
+- ✅ Caso 15 — Top 5 retorna exactamente 5 elementos en orden DESC; el primero es el de 10 ausencias; cada elemento tiene `nombre`, `codigo` y `cantidad_ausencias`.
+
+### Hallazgos de auditoría que las pruebas no pueden confirmar ni refutar
+
+- **Hallazgo 6 (Race condition):** La condición de carrera entre el `SELECT` de unicidad y el `INSERT` en `estudiante.controller.js` (líneas 35-40) es estructuralmente real, pero las pruebas son secuenciales y no pueden dispararla. El escenario requeriría dos peticiones simultáneas. Las pruebas corren con 409 porque el check manual funciona en contexto de un solo proceso.
+
+- **Hallazgo 5 (Fuga de esquema en errores):** El `errorHandler.js` expone `err.message` directamente. Las pruebas nunca causan un 500 porque los datos de prueba siempre son válidos o el código los rechaza antes. La cobertura del errorHandler quedó en **33.33 %** — la función existe en el módulo pero su cuerpo no se ejerció en ningún test.
+
+- **Bug latente detectado por cobertura (no por fallo):** El bloque `catch` de `getAll` en `estudiante.controller.js` (línea 9) y el bloque `catch` de `create` en la misma ruta tienen 0 % de cobertura de rama. Un error de BD no gestionado (p. ej. tabla corrupta) devolvería el mensaje crudo de SQLite al cliente, confirmando el Hallazgo 5 de la auditoría manual.
+
+### Cobertura de código
+
+```
+---------------------------|---------|----------|---------|---------|-------------------
+File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+---------------------------|---------|----------|---------|---------|-------------------
+All files                  |   90.41 |    69.23 |   88.88 |   90.41 |
+ src/app.js                |   93.75 |      100 |       0 |   93.75 | 22
+ src/controllers           |   86.88 |    85.71 |     100 |   86.88 |
+  asistencia.controller.js |   89.65 |       90 |     100 |   89.65 | 12,37,54
+  estudiante.controller.js |      84 |       75 |     100 |      84 | 9,23-25,45
+  reportes.controller.js   |   85.71 |      100 |     100 |   85.71 | 9
+ src/database/db.js        |    90.9 |       50 |     100 |    90.9 | 32
+ src/middlewares           |   71.42 |    33.33 |      50 |   71.42 |
+  errorHandler.js          |   33.33 |        0 |       0 |   33.33 | 3-9
+  validators.js            |     100 |      100 |     100 |     100 |
+ src/models                |     100 |      100 |     100 |     100 |
+ src/routes                |     100 |      100 |     100 |     100 |
+---------------------------|---------|----------|---------|---------|-------------------
+```
+
+- **Líneas cubiertas:** 90.41 %
+- **Funciones cubiertas:** 88.88 %
+- **Ramas cubiertas:** 69.23 %
+- **Archivos con cobertura notable baja:**
+  - `src/middlewares/errorHandler.js` — **33.33 %** (ningún test provocó un error 500; el middleware existe pero su lógica nunca se ejecutó durante las pruebas)
+  - `src/app.js` — **93.75 %** — la línea 22 (handler de ruta desconocida) no fue invocada porque todos los tests usan rutas válidas

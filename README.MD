@@ -1,9 +1,5 @@
 # Taller práctico — Del vibe coding a la ingeniería agéntica
 
-**Asignatura:** Ingeniería de Software III
-**Programa:** Ingeniería de Sistemas y Computación — Universidad de Caldas
-**Docente:** Yaneth Mejía
-
 ---
 
 ## 1. Presentación
@@ -76,41 +72,15 @@ El taller se divide en cuatro fases. Cada fase tiene un tiempo sugerido y un pun
 4. Copia y pega el código que te genere. Si te pide ejecutar `npm install`, hazlo sin leer qué dependencias agrega. Si aparecen errores, cópialos y pégalos en el chat de la IA hasta que se resuelvan.
 5. Cuando logres que los seis endpoints respondan, haz commit con el mensaje `vibe: API funcional segun la IA`.
 
-### 🚀 Instrucciones para ejecutar el proyecto generado
-
-1. **Instalar las dependencias**
-   ```bash
-   npm install
-   ```
-
-2. **Crear archivo de entorno**
-   Copia el archivo `.env.example` a `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-
-3. **Poblar la base de datos con datos de prueba (Seeds)**
-   ```bash
-   npm run seed
-   ```
-
-4. **Levantar el servicio**
-   ```bash
-   npm start
-   ```
-   *También puedes usar `npm run dev` para correr en modo desarrollo con nodemon.*
-
-El servidor se ejecutará de forma predeterminada en `http://localhost:3000`.
-
 **Punto de control:** debes poder hacer `POST /api/estudiantes` y `GET /api/estudiantes` desde Postman o `curl` y obtener respuesta `200`.
 
 **Entregable parcial:** captura de pantalla de los seis endpoints respondiendo + commit en GitHub.
 
 ---
 
-### Fase 2 — Auditoría crítica del código generado (40 minutos)
+### Fase 2 — Auditoría crítica del código generado (20 minutos)
 
-Ahora sí lees. **Por primera vez.** Acompáñate de la siguiente lista de verificación y, para cada ítem, consigna en un archivo `AUDITORIA.md` qué encontraste, con la referencia al archivo y la línea específica.
+Se tiene la siguiente lista de verificación, para cada ítem, guarda en un archivo `AUDITORIA.md` qué encontraste, con la referencia al archivo y la línea específica.
 
 **Checklist de auditoría:**
 
@@ -144,9 +114,9 @@ Ahora sí lees. **Por primera vez.** Acompáñate de la siguiente lista de verif
 
 ---
 
-### Fase 3 — Pruebas retroactivas para revelar los bugs (50 minutos)
+### Fase 3 — Pruebas retroactivas para revelar los bugs (30 minutos)
 
-Ahora vas a escribir las pruebas que **deberían haber existido antes**. Aquí es donde el taller conecta con todo lo que has aprendido en el Taller de Testing.
+Ahora vas a escribir las pruebas que **deberían haber existido antes**.
 
 **Instrucciones:**
 
@@ -193,8 +163,6 @@ describe('POST /api/estudiantes', () => {
 });
 ```
 
-**Punto de control:** al menos 5 pruebas deben fallar. Si fallan 0, tu set de pruebas es demasiado blando. Si fallan todas, revisa la configuración.
-
 **Entregable parcial:** carpeta `tests/` con los 15 casos + reporte de resultados + commit `test: pruebas retroactivas reveladoras`.
 
 ---
@@ -225,35 +193,7 @@ Ahora vuelves a usar la IA, pero esta vez **tú eres el supervisor**. El cambio 
 
 ---
 
-## 6. Entregables finales
-
-El estudiante debe entregar, a través de un enlace al repositorio de GitHub:
-
-1. **Código fuente** con todas las fases versionadas en commits distinguibles (`vibe:`, `docs:`, `test:`, `refactor:`).
-2. **Archivo `AUDITORIA.md`** con mínimo 8 hallazgos más la sección de bugs confirmados por pruebas.
-3. **Carpeta `tests/`** con al menos 15 pruebas automatizadas, todas en verde al final.
-4. **Reflexión personal** en el archivo `REFLEXION.md` (300–500 palabras) respondiendo:
-   - ¿Cuántos hallazgos tuvo el código de la Fase 1?
-   - ¿Cuáles consideras más graves y por qué?
-   - ¿En qué tipo de proyectos usarías vibe coding y en cuáles no?
-   - ¿Qué distingue a un ingeniero de un "aceptador de sugerencias de IA"?
-
----
-
-## 7. Rúbrica de evaluación
-
-| Criterio                                              | Peso | Excelente (5.0)                                                                | Aceptable (3.0–4.0)                                         | Insuficiente (0.0–2.9)                           |
-| ----------------------------------------------------- | ---- | ------------------------------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------ |
-| Fase 1 completada con API funcional                   | 10 % | Seis endpoints responden correctamente a peticiones válidas                    | Al menos cuatro endpoints responden                         | Menos de cuatro endpoints o no corre             |
-| Calidad y profundidad de la auditoría                 | 25 % | 10+ hallazgos con severidad, archivo, línea, evidencia e impacto               | 8 hallazgos documentados con estructura clara               | Menos de 8 hallazgos o sin evidencia             |
-| Cobertura y pertinencia de las pruebas                | 30 % | 15+ pruebas, casos felices, bordes y errores. Al menos 5 revelan bugs reales   | 15 pruebas con cobertura razonable                          | Menos de 15 pruebas o triviales                  |
-| Refactorización con trazabilidad a hallazgos          | 20 % | Cada corrección conectada a un hallazgo, todas las pruebas en verde            | Mayoría de hallazgos corregidos                             | Correcciones sin trazabilidad o pruebas en rojo  |
-| Reflexión crítica y profesional                       | 10 % | Responde las cuatro preguntas con argumentos propios y ejemplos del taller     | Responde las cuatro preguntas de forma genérica             | Respuestas superficiales o ausentes              |
-| Calidad del repositorio (commits, README, estructura) | 5 %  | Historia de commits clara, README completo, estructura de carpetas profesional | README funcional y commits ordenados                        | README ausente o commits caóticos                |
-
----
-
-## 8. Principios que se consolidan con este taller
+## 6. Principios que se consolidan con este taller
 
 1. **La IA no reemplaza la comprensión.** Produce código; tú respondes por él.
 2. **Las pruebas son la herramienta de verificación más honesta** cuando el autor del código no eres tú.
@@ -263,7 +203,7 @@ El estudiante debe entregar, a través de un enlace al repositorio de GitHub:
 
 ---
 
-## 9. Lecturas y recursos complementarios
+## 7. Lecturas y recursos complementarios
 
 - Karpathy, A. (2 de febrero de 2025). *"There's a new kind of coding I call vibe coding..."*. X (Twitter).
 - Karpathy, A. (febrero de 2026). Publicación sobre *agentic engineering* como evolución del término vibe coding.
@@ -272,13 +212,3 @@ El estudiante debe entregar, a través de un enlace al repositorio de GitHub:
 - Google Cloud. (2025). *Vibe Coding Explained: Tools and Guides*.
 - Documentación oficial de Jest: https://jestjs.io
 - Documentación oficial de Supertest: https://github.com/ladjs/supertest
-
----
-
-## 10. Notas para el docente
-
-- **Tiempo real esperado:** en grupos grandes (más de 25 estudiantes) esta práctica se puede dividir en dos sesiones. La Fase 1 y 2 en una sesión; Fase 3 y 4 en la siguiente.
-- **Plenaria recomendada al cierre:** pedir a tres estudiantes voluntarios que muestren en proyector su hallazgo más grave. Suele generar discusión rica sobre responsabilidad profesional.
-- **Adaptación:** si el grupo no domina Supertest, reducir a 10 pruebas y aceptar pruebas unitarias puras con mocks manuales.
-- **Variante avanzada:** en lugar de API en memoria, exigir uso de SQLite o PostgreSQL, lo que expone mejor problemas de SQL injection.
-- **Extensión al Semillero SOLID:** este taller puede servir de insumo para un estudio exploratorio sobre uso responsable de IA en proyectos de estudiantes.

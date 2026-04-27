@@ -3,7 +3,9 @@ const path = require('path');
 
 // Permite configurar la ruta por variable de entorno para producción (Fly.io) o usar la local.
 const dbPath = process.env.DB_PATH || path.resolve(__dirname, 'asistencia.db');
-const db = new Database(dbPath, { verbose: console.log });
+const db = new Database(dbPath, {
+    verbose: process.env.NODE_ENV === 'test' ? undefined : console.log
+});
 
 // Inicializar y crear tablas
 const initDB = () => {
